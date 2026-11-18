@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-// Local: localhost / bistro_devops / root / senha vazia (padrão XAMPP).
+// Local: localhost / bistro_devops / root / senha vazia (padrão XAMPP/Laragon).
 // InfinityFree: substitua pelos dados exatos exibidos no painel da hospedagem.
 $dbHost = 'localhost';
 $dbName = 'bistro_devops';
@@ -12,6 +12,9 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
     ]);
+    // Horário de Brasília (o servidor online pode estar em outro fuso, como UTC).
+    $pdo->exec("SET time_zone = '-03:00'");
+    date_default_timezone_set('America/Sao_Paulo');
 } catch (PDOException $e) {
     error_log('Erro de conexão: '.$e->getMessage());
     http_response_code(500);
